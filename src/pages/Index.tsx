@@ -19,6 +19,7 @@ import imgB5 from '@/assets/B5.png'
 import imgB6 from '@/assets/B6.png'
 import imgB7 from '@/assets/B7.jpg'
 import imgB8 from '@/assets/B8.jpg'
+import { useState } from "react";
 
 const Index = () => {
 
@@ -78,6 +79,13 @@ const Index = () => {
     },
 
   ]
+
+  const [details, setDetails] = useState({
+    name: '',
+    email: '',
+    type: '',
+    msg: ''
+  })
 
 
   return (
@@ -355,7 +363,7 @@ const Index = () => {
                     </div>
                     <div>
                       <p className="font-medium">Email</p>
-                      <p className="text-muted-foreground">devcraft123@gmail.com</p>
+                      <p className="text-muted-foreground">devcraft9@gmail.com</p>
                     </div>
                   </div>
 
@@ -387,6 +395,15 @@ const Index = () => {
                   <div>
                     <label className="block text-sm font-medium mb-2">Name</label>
                     <input
+                      value={details?.name}
+                      onChange={(e) => {
+                        setDetails((prev) => {
+                          return {
+                            ...prev,
+                            name: e?.target?.value
+                          }
+                        })
+                      }}
                       type="text"
                       className="w-full p-3 rounded-lg bg-secondary/50 border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors"
                       placeholder="Your name"
@@ -395,6 +412,15 @@ const Index = () => {
                   <div>
                     <label className="block text-sm font-medium mb-2">Email</label>
                     <input
+                      value={details?.email}
+                      onChange={(e) => {
+                        setDetails((prev) => {
+                          return {
+                            ...prev,
+                            email: e?.target?.value
+                          }
+                        })
+                      }}
                       type="email"
                       className="w-full p-3 rounded-lg bg-secondary/50 border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors"
                       placeholder="your@email.com"
@@ -402,7 +428,17 @@ const Index = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-2">Project Type</label>
-                    <select className="w-full p-3 rounded-lg bg-secondary/50 border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors">
+                    <select
+                      value={details?.type}
+                      onChange={(e) => {
+                        setDetails((prev) => {
+                          return {
+                            ...prev,
+                            type: e?.target?.value
+                          }
+                        })
+                      }}
+                      className="w-full p-3 rounded-lg bg-secondary/50 border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors">
                       <option>Web Development</option>
                       <option>Graphic Design</option>
                       <option>Both Services</option>
@@ -411,12 +447,28 @@ const Index = () => {
                   <div>
                     <label className="block text-sm font-medium mb-2">Message</label>
                     <textarea
+                      value={details?.msg}
+                      onChange={(e) => {
+                        setDetails((prev) => {
+                          return {
+                            ...prev,
+                            msg: e?.target?.value
+                          }
+                        })
+                      }}
                       rows={4}
                       className="w-full p-3 rounded-lg bg-secondary/50 border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors resize-none"
                       placeholder="Tell us about your project..."
                     ></textarea>
                   </div>
-                  <Button variant="hero" size="lg" className="w-full">
+                  <Button
+                    onClick={() => {
+                      const a = document.createElement('a');
+                      a.href = `mailto:devcraft9@gmail.com?subject=Start Project&body=${encodeURIComponent(details?.name)}%0A${encodeURIComponent(details?.type)}%0A${encodeURIComponent(details?.msg)}`;
+                      a.target = "_blank";
+                      a.click();
+                    }}
+                    variant="hero" size="lg" className="w-full">
                     Send Message
                     <ArrowRight className="ml-2" />
                   </Button>
